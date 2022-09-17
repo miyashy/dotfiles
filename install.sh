@@ -1,5 +1,5 @@
 #!/bin/sh
-ln -sf Brewfile ~/Brewfile
-ln -sf .vimrc ~/.vimrc
-ln -sf .zshrc ~/.zshrc
-ln -sf .zshenv ~/.zshenv
+ln -sf `pwd`/Brewfile ~/Brewfile
+ln -sf `pwd`/.vimrc ~/.vimrc
+ln -sf `pwd`/.zshrc ~/.zshrc
+ln -sf `pwd`/.zshenv ~/.zshenv

@@ -4,13 +4,15 @@ source $ZPLUG_HOME/init.zsh
 
 # plugins
 zplug "plugins/git", from:oh-my-zsh
-zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-completions", use:'src/_*', lazy:true
 zplug "zsh-users/zsh-autosuggestions"
 zplug "mafredri/zsh-async", from:github
 zplug "zsh-users/zsh-syntax-highlighting", defer:2 #compinit以降に読み込み
 
 #Themes : This one works
-zplug "scotchg/agnoster-dark", use:agnoster.zsh-theme, as:theme
+zplug "celestialorb/zsh-theme", use:celestialorb.zsh-theme, as:theme
+#zplug "kushalgangan/agnoster-zsh-theme", use:agnoster.zsh-theme, as:theme
+#zplug "scotchg/agnoster-dark", use:agnoster.zsh-theme, as:theme
 #zplug "yous/lime"
 
 # Install plugins if there are plugins that have not been installed
@@ -53,3 +55,7 @@ alias ll='ls -l'
 alias la='ls -la'
 # setup anyenv
 eval "$(anyenv init -)"
+
+
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
