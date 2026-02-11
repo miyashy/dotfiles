@@ -1,0 +1,30 @@
+shell = "zsh"
+
+[plugins.zsh-defer]
+github = "romkatv/zsh-defer"
+
+[plugins.oh-my-zsh-git]
+github = "ohmyzsh/ohmyzsh"
+dir = "plugins/git"
+use = ["*.plugin.zsh"]
+apply = ["defer"]
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"
+dir = "src"
+apply = ["fpath"]
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+apply = ["defer"]
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+apply = ["defer"]
+
+[plugins.powerlevel10k]
+github = "romkatv/powerlevel10k"
+
+[templates]
+defer = "{% for file in files %}zsh-defer source \"{{ file }}\"\n{% endfor %}"
+fpath = 'fpath=( "{{ dir }}" $fpath )'
