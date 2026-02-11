@@ -1,5 +1,13 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Load zpulg
-export ZPLUG_HOME=/usr/local/opt/zplug
+#export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME=$(brew --prefix)/opt/zplug
 source $ZPLUG_HOME/init.zsh
 
 # plugins
@@ -10,10 +18,7 @@ zplug "mafredri/zsh-async", from:github
 zplug "zsh-users/zsh-syntax-highlighting", defer:2 #compinit以降に読み込み
 
 #Themes : This one works
-zplug "celestialorb/zsh-theme", use:celestialorb.zsh-theme, as:theme
-#zplug "kushalgangan/agnoster-zsh-theme", use:agnoster.zsh-theme, as:theme
-#zplug "scotchg/agnoster-dark", use:agnoster.zsh-theme, as:theme
-#zplug "yous/lime"
+zplug romkatv/powerlevel10k, as:theme, depth:1
 
 # Install plugins if there are plugins that have not been installed
 if ! zplug check --verbose; then
@@ -25,7 +30,6 @@ fi
 
 # Then, source plugins and add commands to $PATH
 zplug load
-# zplug load --verbose
 
 # set completion setting
 zstyle ':completion:*:default' menu select=1
@@ -55,7 +59,12 @@ alias ll='ls -l'
 alias la='ls -la'
 # setup anyenv
 eval "$(anyenv init -)"
+#eval "$(jenv init -)"
 
+#source "$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+eval "$(git wt --init zsh)"
+
