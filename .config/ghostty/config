@@ -1,0 +1,25 @@
+# Theme
+theme = JetBrains Darcula
+
+# Fonts
+font-family = HackGen Console NF
+font-size = 14
+font-feature = -liga
+font-feature = -dlig
+font-feature = -calt
+
+# Window
+window-show-tab-bar = always
+window-padding-x = 4
+window-padding-y = 4
+
+# Split
+unfocused-split-opacity = 0.7
+unfocused-split-fill = #000000
+
+# Clipboard
+copy-on-select = clipboard
+clipboard-paste-protection = false
+
+# Shell
+shell-integration = zsh

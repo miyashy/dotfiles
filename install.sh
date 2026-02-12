@@ -25,3 +25,7 @@ link_file "$DOTFILES_DIR/.p10k.zsh" ~/.p10k.zsh
 # sheldon設定
 mkdir -p "$HOME/.config/sheldon"
 link_file "$DOTFILES_DIR/.config/sheldon/plugins.toml" "$HOME/.config/sheldon/plugins.toml"
+
+# ghostty設定
+mkdir -p "$HOME/.config/ghostty"
+link_file "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
