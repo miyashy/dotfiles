@@ -52,9 +52,23 @@ setopt share_history
 setopt inc_append_history
 
 # --- Aliases ---
-alias gs='cd $(ghq root)/$(ghq list | fzf --preview "ls -la $(ghq root)/{}")'
-alias ll='ls -l'
-alias la='ls -la'
+# Repo navigation
+alias gs='cd $(ghq root)/$(ghq list | fzf --preview "eza -la --git --icons $(ghq root)/{} 2>/dev/null || ls -la $(ghq root)/{}")'
+
+# Modern replacements
+if command -v eza &>/dev/null; then
+  alias ls='eza --group-directories-first'
+  alias ll='eza -l --git --icons --group-directories-first'
+  alias la='eza -la --git --icons --group-directories-first'
+  alias lt='eza -T --git-ignore --level=2'
+else
+  alias ll='ls -l'
+  alias la='ls -la'
+fi
+if command -v bat &>/dev/null; then
+  alias cat='bat --paging=never'
+  export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
 
 # --- Tools ---
 # mise（バージョンマネージャー）

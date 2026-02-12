@@ -19,5 +19,16 @@ path=(
   $path
 )
 
+# fzf デフォルト設定
+export FZF_DEFAULT_OPTS='
+  --height=60%
+  --layout=reverse
+  --border
+  --info=inline
+'
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:300 {} 2>/dev/null || cat {}'"
+export FZF_CTRL_R_OPTS='--sort --exact'
+export FZF_ALT_C_OPTS="--preview 'eza -T --level=2 --icons {} 2>/dev/null || ls {}'"
+
 # シークレット
 [[ -f "$HOME/.zshsecret" ]] && source "$HOME/.zshsecret"
