@@ -29,3 +29,16 @@ link_file "$DOTFILES_DIR/.config/sheldon/plugins.toml" "$HOME/.config/sheldon/pl
 # ghostty設定
 mkdir -p "$HOME/.config/ghostty"
 link_file "$DOTFILES_DIR/.config/ghostty/config" "$HOME/.config/ghostty/config"
+
+# bin scripts
+mkdir -p "$HOME/.local/bin"
+link_file "$DOTFILES_DIR/bin/git-wt-cmux-hook" "$HOME/.local/bin/git-wt-cmux-hook"
+
+# git-wt configuration
+if command -v git-wt &>/dev/null; then
+  if ! git config --global --get-all wt.hook 2>/dev/null | grep -qF "git-wt-cmux-hook"; then
+    git config --global --add wt.hook "git-wt-cmux-hook"
+    echo "Configured: wt.hook -> git-wt-cmux-hook"
+  fi
+  git config --global wt.nocd create
+fi

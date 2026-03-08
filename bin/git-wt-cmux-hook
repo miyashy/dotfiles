@@ -1,0 +1,40 @@
+#!/bin/bash
+set -euo pipefail
+
+# cmuxが利用可能でない場合は何もしない
+if ! command -v cmux &>/dev/null || ! cmux ping &>/dev/null; then
+  exit 0
+fi
+
+worktree_dir="$(pwd)"
+repo_name="$(basename "$(dirname "$(git -C "$worktree_dir" rev-parse --git-common-dir 2>/dev/null)")" 2>/dev/null || basename "$worktree_dir")"
+branch_name="$(git branch --show-current 2>/dev/null || basename "$worktree_dir")"
+ws_title="${repo_name} / ${branch_name}"
+
+# 新しいワークスペースを作成
+output="$(cmux new-workspace 2>/dev/null)" || exit 0
+ws_uuid="${output#OK }"
+
+send_cd() {
+  cmux send --workspace "$ws_uuid" --surface "$1" "cd ${worktree_dir}\n" &>/dev/null || true
+}
+
+# 右ペインを作成（左|右の2分割）
+right_top="$(cmux --json new-split right --workspace "$ws_uuid" 2>/dev/null)" || true
+right_top_ref="$(echo "$right_top" | grep -o '"surface_ref" *: *"[^"]*"' | head -1 | grep -o '"surface:[0-9]*"' | tr -d '"')"
+
+# 右ペインを上下に分割（左|右上|右下の3分割）
+if [[ -n "$right_top_ref" ]]; then
+  cmux --json new-split down --workspace "$ws_uuid" --surface "$right_top_ref" &>/dev/null || true
+fi
+
+# 全surfaceを取得してworktreeディレクトリにcd
+surfaces="$(cmux --json list-panels --workspace "$ws_uuid" 2>/dev/null)" || true
+if [[ -n "$surfaces" ]]; then
+  for ref in $(echo "$surfaces" | grep -o '"ref" *: *"surface:[0-9]*"' | grep -o 'surface:[0-9]*'); do
+    send_cd "$ref"
+  done
+fi
+
+# ワークスペース名を「リポジトリ名 / ブランチ名」に設定
+cmux rename-workspace --workspace "$ws_uuid" "$ws_title" &>/dev/null || true
