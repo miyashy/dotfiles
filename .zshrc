@@ -70,6 +70,10 @@ if command -v bat &>/dev/null; then
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 
+# Claude Code
+alias claude='cmux claude-teams'
+alias claude-bedrock='CLAUDE_CODE_USE_BEDROCK=1 CMUX_PRESERVE_CLAUDE_AUTH_SELECTION_ENV=1 ANTHROPIC_DEFAULT_OPUS_MODEL="global.anthropic.claude-opus-4-6[1m]" ANTHROPIC_DEFAULT_SONNET_MODEL="global.anthropic.claude-sonnet-5[1m]" cmux claude-teams'
+
 # --- Tools ---
 # mise（バージョンマネージャー）
 if command -v mise &>/dev/null; then
